@@ -1,0 +1,51 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  background-color: #8c0000;
+}
+
+h1 {
+  margin-top: 25px;
+  margin-bottom: 0px;
+}
+
+button {
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  font-family: monospace;
+  border: gray solid thin;
+  border-radius: 10px;
+  padding: 10px 25px;
+}
+
+h1 {
+  font-size: 64px;
+  color: white;
+}
+
+button:hover {background-color: LightGray}
+
+#grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 704px;
+  height: 704px;
+  margin: 25px auto;
+  background-color: white;
+}
+
+.cell {
+  border: 1px solid gray;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 704px;
+}
