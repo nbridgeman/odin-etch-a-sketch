@@ -24,24 +24,16 @@ function addCellListeners() {
 
 function addButtonListeners() {
   document.getElementById("size").addEventListener('click', () => {
-    size = prompt("Input a new grid size:", size);
-    while (size > 64 || size < 8) {
-      size = prompt("Input a new grid size (between 8 and 64):", size);
+    if (slider.value != size) {
+      size = slider.value;
+      clear();
+      initialize(size);
     }
-    clear();
-    initialize(size);
   });
 
   document.getElementById("clear").addEventListener('click', () => {
     clear();
     initialize(size);
-  });
-
-  document.getElementById("color").addEventListener('click', () => {
-    color = prompt("Input a new color:", color);
-    while (!isValidColor(color)) {
-      color = prompt("Please try again:", color);
-    }
   });
 }
 
@@ -66,3 +58,19 @@ function clear() {
 
 initialize();
 addButtonListeners();
+
+var slider = document.getElementById("myRange");
+document.getElementById("myRange").step = "2";
+document.getElementById("myRange").defaultValue = "16";
+var val = slider.value;
+document.getElementById("dim").textContent = val + " x " + val;
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  var val = this.value;
+  document.getElementById("dim").textContent = val + " x " + val;
+}
+
+var pickColor = document.getElementById("color");
+pickColor.oninput = function() {
+  color = this.value;
+}
