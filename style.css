@@ -29,6 +29,8 @@ button {
 
 button:hover {background-color: LightGray}
 
+input:hover {background-color: LightGray}
+
 .slidecontainer {
   width: auto;
   padding-top: 10px;

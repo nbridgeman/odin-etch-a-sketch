@@ -84,3 +84,19 @@ pen.addEventListener('click', () => {
     pen.textContent = "Pen";
   }
 });
+
+pen.addEventListener('mouseover', () => {
+  if (pen.textContent == "Pen") {
+    pen.textContent = "Eraser";
+  } else {
+    pen.textContent = "Pen";
+  }
+});
+
+pen.addEventListener('mouseout', () => {
+  if (pen.textContent == "Eraser") {
+    pen.textContent = "Pen";
+  } else {
+    pen.textContent = "Eraser";
+  }
+});
