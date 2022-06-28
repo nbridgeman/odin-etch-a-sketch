@@ -76,12 +76,12 @@ pickColor.oninput = function() {
 
 var pen = document.getElementById("pen");
 pen.addEventListener('click', () => {
-  if (pen.textContent == "Pen") {
+  if (pen.textContent == "Eraser") {
     color = 'white';
-    pen.textContent = "Eraser";
+    pen.textContent = "Pen";
   } else {
     color = pickColor.value;
-    pen.textContent = "Pen";
+    pen.textContent = "Eraser";
   }
 });
 
@@ -100,3 +100,16 @@ pen.addEventListener('mouseout', () => {
     pen.textContent = "Eraser";
   }
 });
+
+var gridlines = document.getElementById("lines");
+gridlines.addEventListener('click', () => {
+  if (gridlines.textContent == "Hide Grid") {
+    var cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => cell.style.borderColor = "transparent");
+    gridlines.textContent = "Show Grid";
+  } else {
+    var cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => cell.style.borderColor = "gray");
+    gridlines.textContent = "Hide Grid"
+  }
+})
