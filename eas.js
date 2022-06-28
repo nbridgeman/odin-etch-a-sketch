@@ -1,4 +1,4 @@
-const GRID_SIZE = 704;
+const GRID_SIZE = 640;
 var size = 16;
 var color = 'black';
 
@@ -60,7 +60,6 @@ initialize();
 addButtonListeners();
 
 var slider = document.getElementById("myRange");
-document.getElementById("myRange").step = "2";
 document.getElementById("myRange").defaultValue = "16";
 var val = slider.value;
 document.getElementById("dim").textContent = val + " x " + val;
@@ -74,3 +73,14 @@ var pickColor = document.getElementById("color");
 pickColor.oninput = function() {
   color = this.value;
 }
+
+var pen = document.getElementById("pen");
+pen.addEventListener('click', () => {
+  if (pen.textContent == "Pen") {
+    color = 'white';
+    pen.textContent = "Eraser";
+  } else {
+    color = pickColor.value;
+    pen.textContent = "Pen";
+  }
+});
