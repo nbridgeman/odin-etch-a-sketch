@@ -1,17 +1,14 @@
 const GRID_SIZE = 640;
-var size = 16;
-var color = 'black';
+// I hate this global variable but idk how to do this without pointers :/
+var color = "black";
 
-// CITE: https://stackoverflow.com/questions/48484767/javascript-check-if-string-is-valid-css-color
-function isValidColor(strColor) {
-  var s = new Option().style;
-  s.color = strColor;
-
-  // return 'false' if color wasn't assigned
-  return s.color == strColor.toLowerCase();
+function clear() {
+  const cols = document.querySelectorAll(".col");
+  cols.forEach(col => col.remove());
 }
 
-function addCellListeners() {
+function addCellListeners(size) {
+  // cell listeners
   const cells = document.querySelectorAll(".cell");
   cells.forEach(cell => {
     cell.style.height = ((GRID_SIZE / size) - 2) + 'px';
@@ -22,22 +19,7 @@ function addCellListeners() {
   });
 }
 
-function addButtonListeners() {
-  document.getElementById("size").addEventListener('click', () => {
-    if (slider.value != size) {
-      size = slider.value;
-      clear();
-      initialize(size);
-    }
-  });
-
-  document.getElementById("clear").addEventListener('click', () => {
-    clear();
-    initialize(size);
-  });
-}
-
-function initialize() {
+function initialize(size) {
   for (let i = 0; i < size; i++) {
     var col = document.createElement("div");
     col.classList.add("col");
@@ -48,68 +30,70 @@ function initialize() {
     }
     document.getElementById("grid").appendChild(col);
   }
-  addCellListeners();
+  addCellListeners(size);
 }
 
-function clear() {
-  const cols = document.querySelectorAll(".col");
-  cols.forEach(col => col.remove());
-}
+function main() {
+  var size = 16;
+  initialize(size);
 
-initialize();
-addButtonListeners();
+  // color picker listeners
+  const pickColor = document.getElementById("color")
+  pickColor.oninput = function() {
+    color = this.value;
+  }
 
-var slider = document.getElementById("myRange");
-document.getElementById("myRange").defaultValue = "16";
-var val = slider.value;
-document.getElementById("dim").textContent = val + " x " + val;
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  var val = this.value;
+  // pen and eraser selector listeners
+  const pen = document.getElementById("pen");
+  pen.addEventListener('click', () => {
+    if (pen.textContent == "Pen") {
+      pen.textContent = "Eraser";
+      color = 'white';
+    } else {
+      pen.textContent = "Pen";
+      color = pickColor.value;
+    }
+  });
+
+  // clear button listener
+  document.getElementById("clear").addEventListener('click', () => {
+    clear();
+    initialize(size);
+  });
+
+  // grid size slider listener
+  const slider = document.getElementById("myRange");
+  document.getElementById("myRange").defaultValue = "16";
+  var val = slider.value;
   document.getElementById("dim").textContent = val + " x " + val;
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function() {
+    var val = this.value;
+    document.getElementById("dim").textContent = val + " x " + val;
+  }
+
+  // apply grid size listners
+  document.getElementById("size").addEventListener('click', () => {
+    if (slider.value != size) {
+      size = slider.value;
+      clear();
+      initialize(size);
+    }
+  });
+
+  // toggle gridline listener
+  const gridlines = document.getElementById("lines");
+  gridlines.addEventListener('click', () => {
+    if (gridlines.textContent == "Hide Grid") {
+      var cells = document.querySelectorAll(".cell");
+      cells.forEach(cell => cell.style.borderColor = "transparent");
+      gridlines.textContent = "Show Grid";
+    } else {
+      var cells = document.querySelectorAll(".cell");
+      cells.forEach(cell => cell.style.borderColor = "gray");
+      gridlines.textContent = "Hide Grid"
+    }
+  });
 }
 
-var pickColor = document.getElementById("color");
-pickColor.oninput = function() {
-  color = this.value;
-}
-
-var pen = document.getElementById("pen");
-pen.addEventListener('click', () => {
-  if (pen.textContent == "Eraser") {
-    color = 'white';
-    pen.textContent = "Pen";
-  } else {
-    color = pickColor.value;
-    pen.textContent = "Eraser";
-  }
-});
-
-pen.addEventListener('mouseover', () => {
-  if (pen.textContent == "Pen") {
-    pen.textContent = "Eraser";
-  } else {
-    pen.textContent = "Pen";
-  }
-});
-
-pen.addEventListener('mouseout', () => {
-  if (pen.textContent == "Eraser") {
-    pen.textContent = "Pen";
-  } else {
-    pen.textContent = "Eraser";
-  }
-});
-
-var gridlines = document.getElementById("lines");
-gridlines.addEventListener('click', () => {
-  if (gridlines.textContent == "Hide Grid") {
-    var cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => cell.style.borderColor = "transparent");
-    gridlines.textContent = "Show Grid";
-  } else {
-    var cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => cell.style.borderColor = "gray");
-    gridlines.textContent = "Hide Grid"
-  }
-})
+main();
